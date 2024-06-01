@@ -22,7 +22,7 @@ describe('Test Hackathon', () => {
         console.log('total party tasks', await revenueHouse.total_party_tasks(0));
 
         let tx = await revenueHouse.connect(alice).createTask(0, { temp: 1 });
-
+        console.log(tx)
         console.log('total party tasks ', await revenueHouse.total_party_tasks(0));
         const lastPartyId = await revenueHouse.lastPartyId()
         const task_id = await revenueHouse.getTaskId(lastPartyId)

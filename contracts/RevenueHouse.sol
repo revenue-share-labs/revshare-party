@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: MIT
 pragma solidity 0.8.24;
 
 import {ERC1155} from "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
@@ -63,12 +64,21 @@ contract RevenueHouse is ERC1155("") {
         return ++lastPartyId;
     }
 
-    function getTaskId(uint256 party_id) external view returns (bytes32) {
-        uint256 party_task_id = total_party_tasks[party_id] + 1;
-        address influencer = influencersParty[party_id];
+    function countTaskId(
+        uint256 party_id,
+        uint256 party_task_id,
+        address influencer
+    ) public pure returns (bytes32) {
         bytes32 task_id = keccak256(
             abi.encode(party_id, party_task_id, influencer)
         );
+        return task_id;
+    }
+
+    function getTaskId(uint256 party_id) external view returns (bytes32) {
+        uint256 party_task_id = total_party_tasks[party_id] + 1;
+        address influencer = influencersParty[party_id];
+        bytes32 task_id = countTaskId(party_id, party_task_id, influencer);
         return task_id;
     }
 
